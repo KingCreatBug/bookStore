@@ -1,0 +1,35 @@
+.register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    &__wrap {
+        width: 50vw;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+            rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+
+    &__title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 32px;
+    }
+
+    &__text {
+        text-align: center;
+        font-size: 18px;
+
+        &--link {
+            text-decoration: none;
+            color: #4b62c7;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

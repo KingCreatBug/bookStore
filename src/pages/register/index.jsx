@@ -1,25 +1,37 @@
 import { Button, Form, Input, Divider } from "antd";
-import "../register/register.scss";
+import "./register.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
-
     const onFinish = (values) => {
         setIsSubmit(true);
         console.log("Success:", values);
         setIsSubmit(false);
     };
+
     return (
         <div className="register">
             <div className="register__wrap">
-                <h1 className="register__title">Login</h1>
+                <h1 className="register__title">Register</h1>
                 <Divider />
                 <Form onFinish={onFinish} layout="vertical" autoComplete="off">
                     <Form.Item
+                        label="Full Name"
+                        name="fullName"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your full name!",
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
                         label="Email"
-                        name="username"
+                        name="email"
                         rules={[
                             {
                                 required: true,
@@ -51,6 +63,19 @@ const LoginPage = () => {
                     >
                         <Input.Password />
                     </Form.Item>
+                    <Form.Item
+                        label="Phone Number"
+                        name="phone"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your phone!",
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
                     <Form.Item>
                         <Button
                             loading={isSubmit}
@@ -63,9 +88,9 @@ const LoginPage = () => {
                 </Form>
                 <Divider>or</Divider>
                 <p className="register__text">
-                    Don't have an account{" "}
-                    <Link className="register__text--link" to="/register">
-                        Register
+                    Already have an account?{" "}
+                    <Link className="register__text--link" to="/login">
+                        Login
                     </Link>
                 </p>
             </div>
@@ -73,4 +98,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;
