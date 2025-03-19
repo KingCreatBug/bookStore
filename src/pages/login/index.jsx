@@ -1,18 +1,39 @@
-import { Button, Form, Input, Divider } from "antd";
+import { Button, Form, Input, Divider, message } from "antd";
 import "../register/register.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { callLogin } from "../../service/api";
+import { useDispatch } from "react-redux";
+import { doLoginAction } from "../../redux/account/accountSlice";
 
 const LoginPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const onFinish = (values) => {
+    const onFinish = async ({ username, password }) => {
         setIsSubmit(true);
-        console.log("Success:", values);
+        const res = await callLogin(username, password);
+        dispatch(doLoginAction(res.data.user));
         setIsSubmit(false);
+        if (res?.data) {
+            messageApi.open({
+                type: "success",
+                content: "Login success",
+            });
+            localStorage.setItem("access_token", res.data.access_token);
+            navigate("/");
+        } else {
+            messageApi.open({
+                type: "error",
+                content: "Please check your email or password",
+            });
+        }
     };
     return (
         <div className="register">
+            {contextHolder}
             <div className="register__wrap">
                 <h1 className="register__title">Login</h1>
                 <Divider />

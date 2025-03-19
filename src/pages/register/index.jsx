@@ -1,18 +1,39 @@
-import { Button, Form, Input, Divider } from "antd";
+import { Button, Form, Input, Divider, notification } from "antd";
 import "./register.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { callRegister } from "../../service/api";
 
 const RegisterPage = () => {
+    const [api, contextHolder] = notification.useNotification();
     const [isSubmit, setIsSubmit] = useState(false);
-    const onFinish = (values) => {
+    const navigate = useNavigate();
+
+    const onFinish = async ({ fullName, email, password, phone }) => {
         setIsSubmit(true);
-        console.log("Success:", values);
+        const res = await callRegister(fullName, email, password, phone);
         setIsSubmit(false);
+        if (res?.data) {
+            api.success({
+                message: "Register Success",
+                description: "Go to login page",
+            });
+            navigate("/login");
+        } else {
+            api.error({
+                message: "Register Success",
+                description:
+                    res.message && Array.isArray(res.message)
+                        ? res.message[0]
+                        : res.message,
+                duration: 5,
+            });
+        }
     };
 
     return (
         <div className="register">
+            {contextHolder}
             <div className="register__wrap">
                 <h1 className="register__title">Register</h1>
                 <Divider />
