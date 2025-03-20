@@ -1,7 +1,11 @@
-import React from "react";
+import "./footer.scss";
 
 const Footer = () => {
-    return <div>Footer</div>;
+    return (
+        <div className="footer">
+            <p className="footer__text">Book Store © by King Create Bug</p>
+        </div>
+    );
 };
 
 export default Footer;

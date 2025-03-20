@@ -14,6 +14,10 @@ import Loading from "./components/Loading";
 import NotFound from "./components/NotFound";
 import AdminPage from "./pages/admin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminUser from "./pages/admin/AdminUser";
+import AdminBook from "./pages/admin/AdminBook";
+import AdminOrder from "./pages/admin/AdminOrder";
+import LayoutAdmin from "./components/Admin/LayoutAdmin";
 
 const Layout = () => {
     return (
@@ -21,20 +25,6 @@ const Layout = () => {
             <Header />
             <Outlet />
             <Footer />
-        </>
-    );
-};
-
-const LayoutAdmin = () => {
-    const isAdminRoute = window.location.pathname.startsWith("/admin");
-    const user = useSelector((state) => state.account.user);
-    const userRole = user?.role;
-
-    return (
-        <>
-            {isAdminRoute && userRole === "ADMIN" && <Header />}
-            <Outlet />
-            {isAdminRoute && userRole === "ADMIN" && <Footer />}
         </>
     );
 };
@@ -72,6 +62,18 @@ const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            {
+                path: "user",
+                element: <AdminUser />,
+            },
+            {
+                path: "book",
+                element: <AdminBook />,
+            },
+            {
+                path: "order",
+                element: <AdminOrder />,
+            },
         ],
     },
     {
@@ -86,15 +88,12 @@ const router = createBrowserRouter([
 
 function App() {
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector(
-        (state) => state.account.isAuthenticated
-    );
+    const isLoading = useSelector((state) => state.account.isLoading);
 
     const getAccount = async () => {
         if (
             window.location.pathname === "/login" ||
-            window.location.pathname === "/register" ||
-            window.location.pathname === "/"
+            window.location.pathname === "/register"
         )
             return;
         const res = await callFetchAccount();
@@ -109,7 +108,7 @@ function App() {
 
     return (
         <>
-            {isAuthenticated ||
+            {!isLoading ||
             window.location.pathname === "/login" ||
             window.location.pathname === "/register" ||
             window.location.pathname === "/" ? (

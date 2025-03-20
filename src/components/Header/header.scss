@@ -1,0 +1,102 @@
+%flexItemCenter {
+    display: flex;
+    align-items: center;
+}
+
+.header {
+    @extend %flexItemCenter;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+    &__wrap {
+        @extend %flexItemCenter;
+        gap: 10px;
+    }
+
+    &__menu {
+        display: none;
+        font-size: 20px;
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 22px;
+        color: #00d8ff;
+    }
+
+    &__search {
+        width: 50%;
+        position: relative;
+        @extend %flexItemCenter;
+
+        &--icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            translate: 0 -50%;
+            color: #00d8ff;
+        }
+
+        &--input {
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px 10px 10px 30px;
+            border: 1px solid #ccc;
+        }
+    }
+
+    &__account {
+        @extend %flexItemCenter;
+        gap: 30px;
+
+        &--cart {
+            cursor: pointer;
+        }
+
+        &--icon {
+            font-size: 30px;
+            color: #00d8ff;
+        }
+
+        &--login {
+            padding-left: 30px;
+            border-left: 1px solid #ccc;
+        }
+
+        &--text {
+            color: #ccc;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+        &--name {
+            color: #000;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+}
+
+.header-drawer__text {
+    font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+    .header__wrap,
+    .header__account--login {
+        display: none;
+    }
+
+    .header__menu {
+        display: block;
+    }
+
+    .header__search {
+        width: 80%;
+    }
+}
